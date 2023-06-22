@@ -11,6 +11,8 @@ function SignUp() {
     try {
       const postData = await fetch("http://127.0.0.1:3001/user/signup", {
         method: "POST",
+
+        // credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
