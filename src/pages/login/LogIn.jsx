@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ export default function LoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           email,
           password,
@@ -20,7 +20,9 @@ export default function LoginPage() {
       });
       const data = await postData.json();
       console.log(data);
+
       setAuth(data);
+      document.cookie = data.token;
     } catch (err) {
       console.log(err);
     }
