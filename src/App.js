@@ -8,19 +8,21 @@ import {
 } from "react-router-dom";
 import { useGlobalContext } from "./context/context";
 import HomePage from "./pages/Home/HomePage";
-import NavBar from "./pages/Home/NavBar";
+
 import { useEffect } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import Devices from "./pages/widgets/Devices.jsx/Devices";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<NavBar />}>
+    <Route path="/" element={<HomePage />}>
       <Route
         path="index"
         element={useGlobalContext.auth === null ? <LoginPage /> : <HomePage />}
       />
       <Route path="home" element={<HomePage />} />
       <Route path="signup" element={<SignUp />} />
+      <Route path="devices" element={<Devices />} />
     </Route>
   )
 );
@@ -46,7 +48,7 @@ function App() {
   return (
     <>
       <div className="flex flex-col h-screen">
-        <div className="dark:bg-slate-950 flex h-20 flex-row justify-between px-3 py-2">
+        <nav className="dark:bg-slate-950 flex h-20 flex-row justify-between px-3 py-2">
           <h2 className="dark:text-purple-400 ">
             <span className="inline-block align-middle">Device Service</span>
           </h2>
@@ -58,7 +60,7 @@ function App() {
           >
             {themeMode === "dark" ? <FaSun /> : <FaMoon />}
           </button>
-        </div>
+        </nav>
         <RouterProvider router={router} />
       </div>
     </>

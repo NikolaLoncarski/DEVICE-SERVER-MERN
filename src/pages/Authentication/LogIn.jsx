@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGlobalContext } from "../../context/context";
 import { Link } from "react-router-dom";
 export default function LoginPage() {
-  const { auth, setAuth } = useGlobalContext();
+  const { setAuth } = useGlobalContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,11 +10,11 @@ export default function LoginPage() {
   const login = async () => {
     try {
       const postData = await fetch("http://127.0.0.1:3001/user/login", {
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({
           email,
           password,
@@ -24,7 +24,7 @@ export default function LoginPage() {
       console.log(data);
 
       setAuth(data);
-      document.cookie = `token=${data.token}`;
+      // document.cookie = `token=${data.token}`;
     } catch (err) {
       console.log(err);
     }
