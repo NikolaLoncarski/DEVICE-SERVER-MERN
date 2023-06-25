@@ -1,9 +1,11 @@
-import { useEffect, useReducer, useState } from "react";
-
+import { useState } from "react";
+import { useGlobalContext } from "../../context/context";
+import { Link } from "react-router-dom";
 export default function LoginPage() {
+  const { auth, setAuth } = useGlobalContext();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [auth, setAuth] = useState();
 
   const login = async () => {
     try {
@@ -22,7 +24,7 @@ export default function LoginPage() {
       console.log(data);
 
       setAuth(data);
-      document.cookie = data.token;
+      document.cookie = `token=${data.token}`;
     } catch (err) {
       console.log(err);
     }
@@ -34,8 +36,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
+    <div className="relative h-full flex flex-col justify-center overflow-hidden">
+      <div className="w-full  p-6 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
         <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
           Sign in
         </h1>
@@ -63,9 +65,14 @@ export default function LoginPage() {
 
           <div className="mt-6">
             <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-              Login
+              <Link to="home">Login</Link>
             </button>
           </div>
+          <Link to="signup" className="pt-2 text-center">
+            <p className="block text-sm font-semibold text-gray-800 hover:text-purple-700">
+              Dont't have an accout? Signup
+            </p>
+          </Link>
         </form>
       </div>
     </div>
