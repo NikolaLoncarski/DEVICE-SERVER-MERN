@@ -28,7 +28,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const { themeMode, setThemeMode } = useGlobalContext();
+  const { auth, themeMode, setThemeMode } = useGlobalContext();
 
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
@@ -45,20 +45,28 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [themeMode]);
+
+  useEffect(() => {
+    console.log(auth);
+  }, [auth]);
   return (
     <>
       <div className="flex flex-col h-screen">
         <nav className="dark:bg-slate-950 flex h-20 flex-row justify-between px-3 py-2">
-          <h2 className="dark:text-purple-400 ">
-            <span className="inline-block align-middle">Device Service</span>
+          <h2 className="dark:text-purple-400 flex items-center text-2xl">
+            Device Service
           </h2>
           <button
-            className="dark:text-purple-400"
+            className="dark:text-purple-400 "
             onClick={() =>
               setThemeMode(themeMode === "dark" ? "light" : "dark")
             }
           >
-            {themeMode === "dark" ? <FaSun /> : <FaMoon />}
+            {themeMode === "dark" ? (
+              <FaSun className="w-8 h-8" />
+            ) : (
+              <FaMoon className="w-8 h-8" />
+            )}
           </button>
         </nav>
         <RouterProvider router={router} />

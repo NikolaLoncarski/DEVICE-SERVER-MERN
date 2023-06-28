@@ -7,7 +7,7 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { setAuth } = useGlobalContext();
+  const { auth, setAuth } = useGlobalContext();
 
   const login = async () => {
     try {
@@ -24,8 +24,9 @@ function SignUp() {
           confirmPassword,
         }),
       });
+
       const data = await postData.json();
-      console.log(data);
+
       setAuth(data);
     } catch (err) {
       console.log(err);
