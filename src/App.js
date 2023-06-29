@@ -17,7 +17,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<HomePage />}>
       <Route
-        path="index"
+        path="auth"
         element={useGlobalContext.auth === null ? <LoginPage /> : <HomePage />}
       />
       <Route path="home" element={<HomePage />} />
@@ -56,18 +56,20 @@ function App() {
           <h2 className="dark:text-purple-400 flex items-center text-2xl">
             Device Service
           </h2>
-          <button
-            className="dark:text-purple-400 "
-            onClick={() =>
-              setThemeMode(themeMode === "dark" ? "light" : "dark")
-            }
-          >
-            {themeMode === "dark" ? (
-              <FaSun className="w-8 h-8" />
-            ) : (
-              <FaMoon className="w-8 h-8" />
-            )}
-          </button>
+          <div className="w-48 flex gap-16 justify-center">
+            <button
+              className="dark:text-purple-400 "
+              onClick={() =>
+                setThemeMode(themeMode === "dark" ? "light" : "dark")
+              }
+            >
+              {themeMode === "dark" ? (
+                <FaSun className="w-8 h-8" />
+              ) : (
+                <FaMoon className="w-8 h-8" />
+              )}
+            </button>
+          </div>
         </nav>
         <RouterProvider router={router} />
       </div>

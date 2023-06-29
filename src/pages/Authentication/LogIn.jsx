@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useGlobalContext } from "../../context/context";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+
 export default function LoginPage() {
   const { setAuth } = useGlobalContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [_, setCookies] = useCookies(["access-token"]);
+  const navigate = useNavigate();
   const login = async () => {
     try {
       const postData = await fetch("http://127.0.0.1:3001/user/login", {
@@ -21,6 +25,8 @@ export default function LoginPage() {
         }),
       });
       const data = await postData.json();
+      setCookies("access-token", postData.data.token);
+      navigate("/");
       console.log(data);
 
       setAuth(data);

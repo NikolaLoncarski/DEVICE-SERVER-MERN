@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/context";
 function SignUp() {
   const [userName, setUserName] = useState();
@@ -8,7 +9,8 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { auth, setAuth } = useGlobalContext();
-
+  const [_, setCookies] = useCookies(["access-token"]);
+  const navigate = useNavigate();
   const login = async () => {
     try {
       const postData = await fetch("http://127.0.0.1:3001/user/signup", {
@@ -27,6 +29,9 @@ function SignUp() {
 
       const data = await postData.json();
 
+      setCookies("access-token", data.token);
+      window.localStorage.setItem("userID", data.data.user.id);
+      navigate("/");
       setAuth(data);
     } catch (err) {
       console.log(err);
